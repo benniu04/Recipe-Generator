@@ -1,0 +1,1161 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+    html:focus-within {
+     scroll-behavior: auto;
+    }
+    
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+
+* {
+    font-family: 'Open Sans', sans-serif;
+    transition-duration: 0.4s;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+h1, h2, h3, .poppins {
+    font-family: 'Poppins', sans-serif;
+}
+
+.nav div button {
+    display: inline-block;
+    margin: 50px;
+}
+
+section{
+    display: block;
+    z-index: 5;
+    padding-top: 100px;
+}
+
+button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
+
+.bgGrid {
+    background-size: 40px 40px;
+    background-image: linear-gradient(to right, grey 1px,
+    transparent 1px), linear-gradient(to-bottom, grey 
+    1px, transparent 1px);
+}
+
+.main-container{
+    background-color: antiquewhite;
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.nav-container{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background-color: antiquewhite;
+    z-index: 10;
+}
+
+.nav-bar-items{
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+    align-items: center;
+    width: 90%;
+    max-width: 1200px;
+    padding: 10px 20px;
+    position: relative;
+}
+
+.menu {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 5px;
+    transition: background-color 0.3s
+}
+
+.menu .line {
+    width: 25px;
+    height: 3px;
+    background-color: black;
+}
+
+.menu:hover, .menu:focus {
+    background-color: #e0e0e0;
+}
+
+.profile-dropdown, .menu-dropdown{
+    position: relative;
+    display: inline-block;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.profile-icon {
+    display: block;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 24px;
+    transition: background-color 0.3s;
+}
+
+.profile-icon:hover, .profile-icon:focus, .menu:hover, .menu:focus{
+    background-color: transparent;
+}
+
+
+.dropdown-content{
+    display: none;
+    position: absolute;
+    background-color: transparent;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    border-radius: 5px;
+    overflow: hidden;
+    z-index: 1;
+    transition: opacity 0.3s;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    z-index: 100; /* Behind the menu content */
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+.menu-content {
+    position: fixed;
+    background-color: bisque;
+    min-width: 400px;
+    height: auto;
+    padding: 20px 40px;
+    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    overflow: hidden;
+    z-index: 100; /* Higher than the overlay */
+    left: 50%; /* Horizontally center */
+    top: 50%; /* Vertically center */
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    display: flex; /* Flexbox layout */
+    flex-direction: column; /* Arrange buttons vertically */
+    gap: 30px;
+    pointer-events: none;
+}
+
+.menu-content.active {
+    display: block;
+    opacity: 1;
+    z-index: 101; /* Ensure it's above the overlay */
+    transform: translate(-50%, -50%) scale(1.05);
+    pointer-events: auto;
+}
+
+.menu-content button {
+    background-color: #ff6f61; /* Coral background for buttons */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+    box-shadow: 3px 3px 0 3px rgba(0, 0, 0, 0.75); /* Soft shadow for buttons */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    width: 100%; /* Full width for buttons */
+    margin-top: 10px;
+}
+
+.menu-content button:hover {
+    transform: translateY(-2px); /* Lift effect on hover */
+    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
+}
+
+.menu-content a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+}
+
+.dropdown-content a, .menu-content a{
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s;
+}
+
+
+.profile-icon:focus + .dropdown-content, .profile-dropdown:hover .dropdown-content, .menu-dropdown:hover .menu-content{
+    display: block;
+    opacity: 1;
+}
+
+.login-out-container {
+    display: flex;
+    margin-left: auto;
+}
+
+.logout-button {
+    width: 100%;
+    text-align: center;
+}
+
+.login-button {
+    padding: 10px 10px;
+    background-color: transparent; 
+    color: #333333;
+    border: 2px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: black 0.3s, transform 0.2s;
+    z-index: 2;
+    margin-top: 20px;
+}
+
+.login-button:hover {
+    transform: scale(1.05);
+}
+
+.main-title {
+    margin: 0;
+    position: absolute; 
+    left: 50%; /* Moves the paragraph to the middle */
+    transform: translateX(-50%); /* Cxenters it exactly */
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: black;
+}
+
+.main-title:hover{
+    cursor: pointer;
+}
+
+.hero-container-box{
+    max-width: 1600px;
+    padding: 0 1.5rem;
+    z-index: 1;
+    overflow: hidden
+}
+
+.back-to-button {
+    color: lightblue;
+}
+
+.back-to-button:hover {
+    text-decoration: underline;
+}
+
+.button-grid{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 400px;
+    z-index: 1;
+}
+
+.actual-content{
+    max-width: 100%;
+    min-width: 0;
+}
+
+
+.finger-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    font-size: 48px;
+    padding-bottom: 60px;
+}
+
+.finger {
+    animation: moveDown 2s infinite;  /* Continuous looping animation */
+    display: inline-block;
+    cursor: pointer;
+}
+
+@keyframes moveDown {
+    0%, 100% {
+        transform: translateY(0);  /* Start and end at the original position */
+    }
+    50% {
+        transform: translateY(20px);  /* Moves down by 20 pixels */
+    }
+}
+
+.gen-box{
+    border-radius: 1rem;
+    align-self: auto;
+    width: 100%;
+    min-width: auto;
+    min-height: auto;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 30px;
+    margin-top: 100px;
+    z-index: 500;
+}
+
+.input-text{
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: black;
+    padding-bottom: 50px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.actual-input-box{
+    display: grid;
+    width: 100%;
+    height: auto;
+    place-content: center;
+    background-color: burlywood;
+    border: 8px solid black;
+    border-radius: 10px;
+    margin-top: 100px;
+    padding: 20px; /* Adds padding inside the boxes */
+    padding-top: 50px;
+    padding-bottom: 40px;
+    opacity: 0.9;
+    border: 2px solid rgb(47, 45, 45); /* Light grey border */
+    box-shadow: 3px 3px 0 3px rgba(0, 0, 0, 0.75);
+}
+
+.output-box{
+    display: grid;
+    width: 100%;
+    height: auto;
+    background-color: burlywood;
+    border: 8px solid black;
+    border-radius: 10px;
+    margin-top: 100px;
+    padding: 20px; /* Adds padding inside the boxes */
+    padding-top: 50px;
+    padding-bottom: 40px;
+    opacity: 0.9;
+    border: 2px solid rgb(47, 45, 45); /* Light grey border */
+    box-shadow: 3px 3px 0 3px rgba(0, 0, 0, 0.75);
+}
+
+.actual-output{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    gap: 20px; /* Space between grid items */
+    padding: 20px;
+}
+
+.actual-output h2 {
+    text-align: center;
+    font-size: 1.5rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.actual-output img{
+    display: block; /* Removes the inline nature of images */
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+    border: 3px solid black;
+    box-shadow: 3px 3px 0 3px rgba(0, 0, 0, 0.75);
+    max-width: 100%;
+    height: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.actual-output p {
+    text-align: center;
+}
+
+.actual-output a {
+    color: #007BFF; /* Gives the link a blue color */
+    text-decoration: none; /* Removes underline from the link */
+    font-weight: bold; /* Makes the link text bold */
+}
+
+.actual-output a:hover {
+    text-decoration: underline; /* Adds underline on hover for better user interaction */
+}
+
+.recipe-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers content horizontally */
+    justify-content: center; /* Centers content vertically if the card has extra space */
+    padding: 20px;
+    background-color: bisque;
+    text-align: center; /* Centers the text inside each box */
+    border-radius: 10px;
+    border: 2px solid rgb(47, 45, 45); /* Light grey border */
+    box-shadow: 3px 3px 0 3px rgba(0, 0, 0, 0.75);
+}
+
+
+.button-container{
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.get-recipe-button{
+    padding: 10px 20px;
+    background-color: lightcoral; /* Green for visibility */
+    color: #333333;
+    border: 2px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: black 0.3s, transform 0.2s;
+    z-index: 2;
+    margin-top: 20px;
+    box-shadow: 3px 3px 0 3px rgba(0, 0, 0, 0.75);
+}
+
+.save-recipe-button{
+    padding: 10px 20px;
+    background-color: lightcoral; /* Green for visibility */
+    color: #333333;
+    border: 2px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: black 0.3s, transform 0.2s;
+    z-index: 2;
+    margin-top: 20px;
+    box-shadow: 3px 3px 0 3px rgba(0, 0, 0, 0.75);
+}
+
+.get-recipe-button:hover, .get-recipe-button:focus,
+.save-recipe-button:hover, .save-recipe-button:focus{
+    transform: scale(1.05);
+}
+
+.save-recipe-button.transparent-background {
+    background-color: lightcoral;
+    color: lightblue;
+}
+
+input[type="text"] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    width: 500px;  /* Adjustable based on layout needs */
+    height: 50px;
+    padding: 10px 15px;
+    font-size: 16px;  /* Good for readability */
+    border: 2px solid rgb(32, 31, 31);  /* Subtle, soft border */
+    border-radius: 20px;  /* Rounded left corners */
+    outline: none;  /* Removes the default focus outline */
+    transition: border-color 0.3s;  /* Smooth transition for focus */
+    margin-bottom: 50px;
+    color: black;
+    box-shadow: 2px 2px 0 2px rgba(0, 0, 0, 0.75);
+}
+
+input::placeholder{
+    color: black;
+}
+
+input[type="text"]:focus {
+    border-color: navy;  /* A soft purple, adjust based on your color scheme */
+    box-shadow: 0 0 8px rgba(90, 103, 216, 0.5);
+    box-shadow:rgba(0, 0, 0, 0.75);
+}
+
+.hero-text{
+    text-align: center;
+    color: #333333;
+    font-size: 5rem;
+    font-weight: 400;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    z-index: 2;
+    max-width: 800px;
+    height: auto;
+    line-height: 80px;
+    padding-top: 150px;
+}
+
+.food-item-images .food-item-1 {
+    position: absolute;
+    width: 200px; /* Adjust size as needed */
+    height: 200px; /* Adjust size as needed */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url('Images/antique-white-tomato.webp');
+    background-color: antiquewhite;
+    mix-blend-mode: darken;
+    opacity: 0.7;
+}
+
+.food-item-images .food-item-2 {
+    position: absolute;
+    width: 200px; /* Adjust size as needed */
+    height: 220px; /* Adjust size as needed */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url('Images/antique-bread.webp');
+    background-color: antiquewhite;
+    mix-blend-mode: darken;
+    opacity: 0.7;
+}
+
+.food-item-images .food-item-3 {
+    position: absolute;
+    width: 200px; /* Adjust size as needed */
+    height: 200px; /* Adjust size as needed */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url('Images/antique-strawberry.webp');
+    background-color: antiquewhite;
+    mix-blend-mode: darken;
+    opacity: 0.7;
+}
+
+.food-item-images .food-item-4 {
+    position: absolute;
+    width: 200px; /* Adjust size as needed */
+    height: 200px; /* Adjust size as needed */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url('Images/antique-onion.webp');
+    background-color: antiquewhite;
+    mix-blend-mode: darken;
+    opacity: 0.7;
+}
+
+.food-item-images .food-item-1:nth-child(1) { margin-top: 350px; transform: rotate(45deg);}
+.food-item-images .food-item-2:nth-child(2) { margin-left: 600px; }
+.food-item-images .food-item-3:nth-child(3) { padding-bottom: 20px; transform: rotate(-45deg); }
+.food-item-images .food-item-4:nth-child(4) { margin-top: 350px; margin-left: 600px; transform: rotate(-45deg);}
+
+
+.logout-text{
+    color: black;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-weight: 600;
+    padding: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.description{
+    text-align: center;
+    max-width: 800px;
+    line-height: 60px;
+    color: #333333;
+    font-size: 1.2rem;
+    font-weight: 400;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.learn-more-button{
+    padding: 10px 20px;
+    background-color: lightcoral; /* Green for visibility */
+    color: #333333;
+    border: 2px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: black 0.3s, transform 0.2s;
+    z-index: 2;
+    margin-top: 20px;
+    box-shadow: 3px 3px 0 3px rgba(0, 0, 0, 0.75);
+}
+
+.learn-more-button:hover, .learn-more-button:focus, .gen-button:hover, .gen-button:focus{
+    transform: scale(1.05);
+}
+
+.learn-more-text{
+    font-weight: bold;
+}
+
+.recipe-text{
+    font-weight: bold;
+}
+
+.recipe-button:hover, .recipe-button:focus{
+    transform: scale(1.05);
+}
+
+.recipe-button{
+    padding: 10px 20px;
+    background-color: antiquewhite; /* Green for visibility */
+    color: #333333;
+    border: 2px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: black 0.3s, transform 0.2s;
+    z-index: 2;
+    margin-top: 20px;
+    box-shadow: 2px 2px 0 3px rgba(0, 0, 0, 0.75);
+}
+
+.hero-about-container{
+    background-color: rgb(236, 163, 6);
+    width: 100%;
+    outline-offset: 0;
+    display: block;
+    position: relative;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+}
+
+.about-contain{
+    width: 100%;
+    max-width: 80rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 100px;
+}
+
+.about-contain-1{
+    width: 100%;
+    max-width: 70rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 100px;
+}
+
+.why-this-title{
+    text-align: center;
+    font-size: 2.5rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 500;
+    padding-top: 100px;
+    line-height: 115%;
+    margin-top: 0;
+    margin-bottom: 2.5rem;
+}
+
+.why-container{
+    border-radius: 1rem;
+    align-self: auto;
+    width: 100%;
+    min-width: auto;
+    min-height: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 100px;
+}
+
+.grid-item-1, .grid-item-2, .grid-item-3{
+    background-image: url('Images/salt-1.webp');
+    border-radius: 10px;
+    padding: 20px; /* Adds padding inside the boxes */
+    text-align: center; /* Centers the text inside each box */
+    padding-top: 50px;
+    padding-bottom: 40px;
+    object-fit: cover;
+    object-position: center;
+    opacity: 0.9;
+    border: 2px solid rgb(47, 45, 45); /* Light grey border */
+    box-shadow: 3px 3px 0 3px rgba(0, 0, 0, 0.75);
+}
+
+
+.usage-container{
+    min-height: auto;
+    min-width: auto;
+    border-radius: 10px;
+    border: 2px solid grey;
+    box-shadow: 0 0 50px olivedrab;
+    margin-top: 50px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.usage-text-contain{
+    display: grid;
+    place-content: left;
+}
+
+.grid-title{
+    color: black;
+    font-size: 2rem;
+    font-style: italic;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.hero-contain{
+    display: grid;
+    place-content: center;
+    max-width: 1200px;
+    z-index: 1;
+    padding-top: 50px;
+    padding-bottom: 200px;
+}
+
+.layout{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.contain-box{
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1400px;
+    padding: 0 1.5rem;
+    padding-top: 100px;
+    padding-bottom: 150px;
+    z-index: 1;
+}
+
+.grid-box{
+    display: block;
+    z-index: 1;
+}
+
+.actual-content{
+    max-width: 100%;
+    min-width: 0;
+    z-index: 1;
+}
+
+.main-content{
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.main-content-1 {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    gap: 20px; /* Space between grid items */
+    padding: 20px;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.success-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: coral;
+    color: black;
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    opacity: 1;
+    animation: fadeOut 2s forwards;
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.reset-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: lightblue;
+    color: black;
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    opacity: 1;
+    animation: fadeOut 2s forwards;
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: 500;
+}
+
+.loader {
+    border: 4px solid black; /* Light grey */
+    border-top: 4px solid coral; /* Blue */
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: spin 2s linear infinite;
+    margin: auto;
+}
+
+.show {
+    display: block;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.benefit-container{
+    border-style: solid;
+    border-width: 2px 0;
+    border-color: black;
+    display: flex;
+    align-items: center;
+    width: 115%;
+    height: 8.75rem;
+    margin-left: -10%;
+    background-color: #773f1a;
+    transform: rotate(3deg);
+    overflow: hidden;
+}
+
+
+.circled-list {  
+    display: grid;
+    grid-template-rows: auto auto auto;
+}
+
+
+.step {
+    display: flex;
+    flex-direction: row;
+    align-items: center; /* Centers items vertically within each step */
+    justify-content: space-between;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid rgb(47, 45, 45); /* Light grey border */
+    box-shadow: 3px 3px 0 3px rgba(0, 0, 0, 0.75);
+}
+
+.step-content{
+    flex: 1;
+}
+
+.step-image{
+    flex: 1; /* Takes up the other half of the container */
+    display: flex;
+    flex-direction: row;
+    justify-content: center; /* Center the image horizontally */
+    align-items: center; /* Center the image vertically */
+    background-image: url('Images/ingredient-input.png');
+    background-color: burlywood;
+    width: 100%;
+    height: 100%;
+    max-width: 600px;
+    object-fit: cover;
+    background-position: center; /* Center the image in the container */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain; /* Resize the image to cover the container */
+    border: 1px solid burlywood;
+    border-radius: 10px;
+    box-shadow: 3px 3px 0 3px rgba(0, 0, 0, 0.75);
+}
+
+.step-image-1{
+    flex: 1; /* Takes up the other half of the container */
+    display: flex;
+    justify-content: center; /* Center the image horizontally */
+    align-items: center; /* Center the image vertically */
+    background-image: url('Images/diet-preference-input.png');
+    background-color: burlywood;
+    width: 100%;
+    height: 100%;
+    max-width: 600px;
+    padding-right: 20px;
+    background-position: center; /* Center the image in the container */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain; /* Resize the image to cover the container */
+    border: 1px solid burlywood;
+    border-radius: 10px;
+    box-shadow: 3px 3px 0 3px rgba(0, 0, 0, 0.75);
+}
+
+.step-image-2{
+    flex: 1; /* Takes up the other half of the container */
+    display: flex;
+    justify-content: center; /* Center the image horizontally */
+    align-items: center; /* Center the image vertically */
+    background-image: url('Images/generate-button.png');
+    background-color: burlywood;
+    width: 100%;
+    height: 100%;
+    max-width: 600px;
+    background-position: center; /* Center the image in the container */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain; /* Resize the image to cover the container */
+    border: 1px solid burlywood;
+    border-radius: 10px;
+    box-shadow: 3px 3px 0 3px rgba(0, 0, 0, 0.75);
+}
+
+
+.circled-list li:hover {
+    transform: translateY(-5px); /* Lift card on hover */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2); /* Deeper shadow for lifted effect */
+}
+
+.how-container{
+    display: grid;
+    grid-template-rows: auto auto auto;
+    background-color: #3EB489;
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    padding: 20px;
+    gap: 20px;
+}
+
+
+ul {
+    counter-reset: item; /* Initializes the counter */
+}
+
+.learn-section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gen-button{
+    padding: 10px 20px;
+    background-color: coral; /* Green for visibility */
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: black 0.3s, transform 0.2s;
+    z-index: 2;
+    margin-top: 20px;
+    font-weight: bold;
+    box-shadow: 3px 3px 0 3px rgba(0, 0, 0, 0.75);
+}
+
+
+.input-ing{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.gen-container{
+    display: grid;
+    grid-template-columns: auto auto;
+    background-color: lightskyblue;
+    width: 100%;
+    outline-offset: 0;
+    display: block;
+    position: relative;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+}
+
+
+.socials-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px;
+    gap: 10px;
+}
+
+
+.socials-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #1c1c1c; /* Dark background for the icon container */
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    text-decoration: none; /* Remove underline from links */
+}
+
+.socials-icon:hover {
+    transform: scale(1.2); /* Scale up the icon on hover */
+    background-color: #333; /* Change background color on hover */
+}
+
+.socials-icon i {
+    color: white; /* Icon color */
+    transition: color 0.3s ease;
+}
+
+.socials-icon:hover i {
+    color: #3EB489; /* Change icon color on hover */
+}
+
+.socials-text {
+    color: aliceblue;
+    gap: 20px;
+    font-weight: 500;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.saved-button {
+    font-weight: 500;
+    margin-top: 100px;
+    border: 4px solid rgb(47, 45, 45); /* Light grey border */
+    border-radius: 10px;
+    padding: 10px;
+    background-color: rgb(239, 239, 186);
+}
+
+.saved-recipe-title {
+    text-align: center;
+    font-size: 1.5rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.saved-recipe-image {
+    display: block; /* Removes the inline nature of images */
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+    border: 3px solid black;
+    box-shadow: 3px 3px 0 3px rgba(0, 0, 0, 0.75);
+    max-width: 100%;
+    height: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 991px) {
+    .why-container, .gen-box{
+        grid-template-columns: 1fr; /* Stacks the grid items vertically on smaller screens */
+    }
+
+    .step{
+        flex-direction: column;
+    }
+
+    .step-image, .step-image-1, .step-image-2 {
+        overflow: hidden;
+        min-height: 100px;
+    }
+
+}
+
+@media screen and (max-width: 991px){
+    .food-item-images, .food-item-2{
+        display: none !important;
+        width: 0 !important;
+        padding: 0 !important;
+    }
+    .hero-text{
+        padding-top: 20px !important;
+    }
+
+    .step{
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .main-content-1 {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .actual-output {
+        display: grid;
+        grid-template-columns: repeat(1,1fr);
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .output-box {
+        display: grid;
+        width: 90%; /* Make it fit within the screen */
+        margin-left: auto;
+        margin-right: auto;
+        padding: 10px; /* Adjust padding for better fit */
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    .login-button {
+        width: 100%;
+        position: absolute;
+    }
+
+    .hero-text {
+        line-height: 100px;
+    }
+
+  }
+
+  @media (max-width: 3000px) {
+    .login-out-container {
+        display: none;
+    }
+    
+    .profile-dropdown.active {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        background-color: #333;
+        position: absolute;
+        top: 50px;
+        right: 20px;
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    .menu {
+        display: flex;
+    }
+
+    .profile-icon {
+        display: block;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
