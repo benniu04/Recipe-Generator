@@ -1,8 +1,9 @@
 # Flavify
 
-![recipe-1](https://github.com/user-attachments/assets/0c82d196-108a-4761-99ec-1f3544c93598)
 
-![recipe-login](https://github.com/user-attachments/assets/0400e697-1d8f-4ba2-a87b-d02756d5c3de)
+![home-page](https://github.com/user-attachments/assets/48e6e17c-d704-48dc-b6a2-634554914970)
+
+![login-page](https://github.com/user-attachments/assets/02ed92f6-97b9-4619-a579-164f773e55e2)
 
 
 Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
