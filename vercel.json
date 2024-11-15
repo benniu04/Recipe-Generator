@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "index.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "headers": {
+        "Content-Security-Policy": "default-src 'self' https://vercel.live https://fonts.googleapis.com https://fonts.gstatic.com https://cdnjs.cloudflare.com; script-src 'self' https://vercel.live 'unsafe-inline' https://kit.fontawesome.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob:; font-src 'self' https://fonts.gstatic.com data:; connect-src 'self' https://vercel.live ws://localhost:5173; frame-src 'self'; media-src 'self' data:; worker-src 'self' blob:; manifest-src 'self';"
+      },
+      "dest": "index.js"
+    }
+  ]
+}
