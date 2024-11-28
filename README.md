@@ -1,5 +1,6 @@
 # Flavify
 
+https://benniu04.github.io/Recipe-Generator/ 
 
 ![home-page](https://github.com/user-attachments/assets/48e6e17c-d704-48dc-b6a2-634554914970)
 
